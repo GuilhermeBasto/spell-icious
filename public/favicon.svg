@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7931E;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Circle background -->
+  <circle cx="50" cy="50" r="48" fill="url(#bg)"/>
+  
+  <!-- Magic wand -->
+  <g filter="url(#shadow)">
+    <!-- Wand stick -->
+    <rect x="35" y="30" width="4" height="30" fill="#FFF" rx="2" transform="rotate(-45 37 45)"/>
+    
+    <!-- Star at top -->
+    <path d="M 50 20 L 52 26 L 58 26 L 53 30 L 55 36 L 50 32 L 45 36 L 47 30 L 42 26 L 48 26 Z" fill="#FFD700" stroke="#FFF" stroke-width="1"/>
+    
+    <!-- Sparkles -->
+    <circle cx="60" cy="25" r="2" fill="#FFE4B5"/>
+    <circle cx="65" cy="35" r="1.5" fill="#FFE4B5"/>
+    <circle cx="55" cy="40" r="1.5" fill="#FFE4B5"/>
+  </g>
+  
+  <!-- Fork -->
+  <g filter="url(#shadow)">
+    <!-- Fork handle -->
+    <rect x="45" y="60" width="3" height="20" fill="#FFF" rx="1.5"/>
+    
+    <!-- Fork prongs -->
+    <rect x="41" y="55" width="2" height="8" fill="#FFF" rx="1"/>
+    <rect x="45" y="53" width="2" height="10" fill="#FFF" rx="1"/>
+    <rect x="49" y="55" width="2" height="8" fill="#FFF" rx="1"/>
+  </g>
+  
+  <!-- Decorative food sparkle -->
+  <circle cx="30" cy="65" r="1.5" fill="#FFD700"/>
+  <circle cx="70" cy="65" r="1.5" fill="#FFD700"/>
+</svg>

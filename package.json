@@ -1,17 +1,29 @@
 {
-  "name": "restaurant-race",
+  "name": "spell-icious",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24.11.1"
+  },
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "generate-emojis": "node scripts/generate-emoji-config.cjs",
+    "optimize-images": "node scripts/optimize-images.cjs",
+    "optimize-emojis": "node scripts/optimize-emojis.cjs",
+    "use-optimized-images": "node scripts/use-optimized-images.cjs",
+    "restore-original-images": "node scripts/restore-original-images.cjs",
+    "process-images": "node scripts/process-images.cjs",
+    "add-image": "node scripts/add-image.cjs"
   },
   "dependencies": {
     "@react-router/node": "7.12.0",
     "@react-router/serve": "7.12.0",
+    "fuse.js": "^7.1.0",
     "isbot": "^5.1.31",
+    "motion": "^12.29.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router": "7.12.0"
@@ -22,9 +34,18 @@
     "@types/node": "^22",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "tailwindcss": "^4.1.13",
+    "autoprefixer": "^10.4.24",
+    "msw": "^2.12.7",
+    "postcss": "^8.5.6",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
