@@ -54,6 +54,18 @@ npm install && npm run dev
 spell-icious/
 ├── app/
 │   ├── components/          # Reusable components
+│   │   ├── race/           # Race components (modular)
+│   │   │   ├── RaceHeader.tsx
+│   │   │   ├── CountdownDisplay.tsx
+│   │   │   ├── WinnerBadge.tsx
+│   │   │   ├── WinnerModal.tsx
+│   │   │   ├── RaceLane.tsx
+│   │   │   ├── RaceInstructions.tsx
+│   │   │   ├── ConfettiEffect.tsx
+│   │   │   ├── types.ts
+│   │   │   ├── utils.ts
+│   │   │   ├── index.ts    # Barrel export
+│   │   │   └── README.md   # Component guide
 │   │   ├── Loading.tsx      # Loading component
 │   │   ├── RestaurantCard.tsx # Restaurant card
 │   │   └── ManualRestaurantInput.tsx # Manual entry component
@@ -62,14 +74,15 @@ spell-icious/
 │   ├── config/              # Configuration
 │   │   └── emojis.ts        # Auto-generated emoji config
 │   ├── lib/                 # Utilities and libraries
-│   │   └── places.server.ts # Server-only functions (secure)
+│   │   ├── places.server.ts # Server-only functions (secure)
+│   │   └── constants.ts     # Constants
 │   ├── mocks/               # MSW Mock Service Worker
 │   │   ├── handlers.ts      # Mock API handlers
 │   │   └── browser.ts       # MSW setup
 │   ├── routes/              # Application routes
 │   │   ├── home.tsx         # Home page
-│   │   ├── select.tsx       # Restaurant selection
-│   │   ├── race.tsx         # Race page
+│   │   ├── select.tsx       # Restaurant selection (with cache)
+│   │   ├── race.tsx         # Race page (refactored, 197 lines)
 │   │   ├── quick-race.tsx   # Quick Race mode (manual only)
 │   │   └── api.restaurants.ts # API endpoint: search
 │   ├── app.css              # Global styles and animations
@@ -85,9 +98,13 @@ spell-icious/
 │   ├── optimize-images.cjs  # Image optimization (Sharp)
 │   ├── process-images.cjs   # Complete pipeline
 │   └── add-image.cjs        # Interactive image addition
+├── Dockerfile               # Docker configuration (Node.js 24.11.1)
+├── .nvmrc                   # Node version (24.11.1)
 ├── README.md                # This file
 ├── IMAGES_QUICKSTART.md     # Image management guide
 ├── IMAGE_OPTIMIZATION.md    # Technical optimization docs
+├── REFACTORING_SUMMARY.md   # Recent refactoring details
+├── RACE_ARCHITECTURE.md     # Component architecture guide
 └── ... (other docs)
 ```
 
@@ -95,7 +112,7 @@ spell-icious/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 24.11.1+
 - npm or yarn
 
 ### Installation
@@ -133,6 +150,7 @@ npm run dev
 ## 🛠️ Technologies
 
 - **React Router v7** (Framework Mode)
+- **Node.js v24.11.1** - Latest LTS version
 - **Tailwind CSS v4** - Modern styling
 - **TypeScript** - Type safety
 - **Vite** - Ultra-fast build tool
@@ -167,12 +185,14 @@ npm run dev
 ## 🔧 Available Scripts
 
 ### Main Commands
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run typecheck` - Check TypeScript types
 
 ### Image Management
+
 - `npm run add-image` - Interactive image addition wizard
 - `npm run process-images` - Complete optimization pipeline
 - `npm run optimize-images` - Optimize images (Sharp)
@@ -211,7 +231,7 @@ The application works perfectly with mock data:
 
 ### Add More Food Emojis
 
-Edit the `getRestaurantIcon` function in `app/routes/race.tsx`:
+Edit the `getRestaurantIcon` function in `app/components/race/utils.ts`:
 
 ```typescript
 const typeMap: Record<string, string> = {
@@ -223,7 +243,7 @@ const typeMap: Record<string, string> = {
 
 ### Change Race Colors
 
-Edit the `colors` array in `app/routes/race.tsx`:
+Edit the `colors` array in `app/components/race/types.ts`:
 
 ```typescript
 const colors = [
@@ -235,13 +255,62 @@ const colors = [
 
 ### Adjust Race Speed
 
-In `app/routes/race.tsx`, adjust the duration values:
+In `app/routes/race.tsx`, adjust the duration values in the `beginRace` function:
 
 ```typescript
 duration: Math.random() * 8 + 12, // Change values here (12-20 seconds)
 ```
 
 ## 🎨 Recent Updates
+
+### v2.1.0 - Architecture Refactoring & Bug Fixes
+
+#### 🏗️ Major Refactoring
+
+- **Race Components Modularization** - Split 1,281-line `race.tsx` into 10 organized components
+  - `RaceHeader.tsx` - Header with back button
+  - `CountdownDisplay.tsx` - Countdown animation
+  - `WinnerBadge.tsx` - Winner announcement badge
+  - `WinnerModal.tsx` - Full winner details modal
+  - `RaceLane.tsx` - Individual race track
+  - `RaceInstructions.tsx` - Instructions display
+  - `ConfettiEffect.tsx` - Celebration effects
+  - `types.ts` - Shared TypeScript types
+  - `utils.ts` - Helper functions
+  - `index.ts` - Barrel export for clean imports
+- **Main race.tsx reduced to 197 lines** (85% reduction!)
+- **Better separation of concerns** - Each component has single responsibility
+- **Improved maintainability** - Easier to test and debug
+
+#### 🐛 Bug Fixes
+
+- ✅ Fixed Error 431 - Implemented cache size limit (10 entries max) in `select.tsx`
+- ✅ Fixed double race trigger - Added `raceStartedRef` to prevent duplicate starts
+- ✅ Fixed countdown not resetting - Properly reset countdown state on race restart
+- ✅ Fixed same winner on restart - Clear timeout before starting new race
+- ✅ Fixed modal X button - Now properly resets race instead of just closing
+
+#### 🚀 Performance Improvements
+
+- **Cache Management** - Automatic cleanup of expired entries (5min TTL)
+- **Memory Optimization** - Limited cache size prevents memory issues
+- **Component Optimization** - All callbacks properly memoized with `useCallback`
+- **Ref Usage** - Refs prevent unnecessary re-renders
+
+#### 🔧 Technical Improvements
+
+- Updated to **Node.js v24.11.1** (latest LTS)
+- Added `.nvmrc` for version management
+- Added `engines` field in `package.json`
+- Updated Dockerfile to use Node.js v24.11.1-alpine
+- Zero TypeScript and linting errors
+
+#### 📚 Documentation
+
+- Added comprehensive architecture documentation
+- Created component usage guide
+- Added refactoring summary
+- Improved code organization
 
 ### v2.0.0 - Major UI/UX Improvements
 
