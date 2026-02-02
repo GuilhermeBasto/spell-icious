@@ -5,6 +5,7 @@
 
 import { useState, useRef } from "react";
 import { FOOD_EMOJIS, CUSTOM_EMOJIS, isEmojiImage } from "../config/emojis";
+import { getGoogleMapsUrl } from "./race/utils";
 
 interface RestaurantCardProps {
   name: string;
@@ -27,6 +28,9 @@ interface RestaurantCardProps {
   outdoorSeating?: string;
   brand?: string;
   cuisine?: string;
+  // Coordinates for Google Maps
+  lat?: number;
+  lng?: number;
 }
 
 export default function RestaurantCard({
@@ -49,6 +53,8 @@ export default function RestaurantCard({
   outdoorSeating,
   brand,
   cuisine,
+  lat,
+  lng,
 }: RestaurantCardProps) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -181,37 +187,15 @@ export default function RestaurantCard({
           {phone && (
             <div className="flex items-start gap-2 text-xs">
               <span className="shrink-0">📞</span>
-              <a
-                href={`tel:${phone}`}
-                onClick={(e) => e.stopPropagation()}
-                className={`hover:underline ${
+              <span
+                className={
                   isSelected
                     ? "text-orange-700 dark:text-orange-300"
                     : "text-gray-600 dark:text-gray-400"
-                }`}
+                }
               >
                 {phone}
-              </a>
-            </div>
-          )}
-
-          {/* Website */}
-          {website && (
-            <div className="flex items-start gap-2 text-xs">
-              <span className="shrink-0">🌐</span>
-              <a
-                href={website}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className={`hover:underline truncate ${
-                  isSelected
-                    ? "text-orange-700 dark:text-orange-300"
-                    : "text-blue-600 dark:text-blue-400"
-                }`}
-              >
-                Website
-              </a>
+              </span>
             </div>
           )}
 
@@ -255,6 +239,43 @@ export default function RestaurantCard({
               )}
             </div>
           )}
+        </div>
+
+        {/* CTAs Section */}
+        <div className="space-y-2 mb-4">
+          {/* Website Link */}
+          {website && (
+            <a
+              href={website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className={`w-full py-2.5 px-4 rounded-lg border-2 font-semibold text-sm transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 ${
+                isSelected
+                  ? "border-orange-400 bg-orange-50 dark:bg-orange-950/30 text-orange-700 dark:text-orange-300 hover:border-orange-500 hover:bg-orange-100 dark:hover:bg-orange-950/50"
+                  : "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700"
+              }`}
+            >
+              <span className="text-lg">🌐</span>
+              <span>Visit Website</span>
+            </a>
+          )}
+
+          {/* Google Maps Button */}
+          <a
+            href={getGoogleMapsUrl(name, address, lat, lng)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className={`w-full py-2.5 px-4 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 shadow-sm ${
+              isSelected
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-blue-500 hover:bg-blue-600 text-white"
+            }`}
+          >
+            <span className="text-lg">🗺️</span>
+            <span>View on Google Maps</span>
+          </a>
         </div>
 
         <div className="flex items-center justify-between">
@@ -315,34 +336,27 @@ export default function RestaurantCard({
 
           <div className="flex items-center gap-2">
             {isSelected && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowEmojiPicker(!showEmojiPicker);
-                  }}
-                  className="bg-orange-500 hover:bg-orange-600 rounded-full px-3 py-1 transition-colors flex items-center gap-1"
-                  title="Choose emoji"
-                >
-                  {isCustomImage ? (
-                    <img
-                      src={customEmoji}
-                      alt="Custom"
-                      className="w-5 h-5 rounded-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-white">{customEmoji || "🍽️"}</span>
-                  )}
-                  <span className="text-white text-sm font-semibold">
-                    Choose
-                  </span>
-                </button>
-                <div className="bg-orange-500 rounded-full px-3 py-1">
-                  <span className="text-white text-sm font-semibold">
-                    Selected
-                  </span>
-                </div>
-              </>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowEmojiPicker(!showEmojiPicker);
+                }}
+                className="bg-orange-500 hover:bg-orange-600 rounded-lg px-4 py-2 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 shadow-sm"
+                title="Pick your icon"
+              >
+                {isCustomImage ? (
+                  <img
+                    src={customEmoji}
+                    alt="Custom"
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="text-xl">{customEmoji || "🍽️"}</span>
+                )}
+                <span className="text-white text-sm font-semibold">
+                  Pick Your Icon
+                </span>
+              </button>
             )}
           </div>
         </div>

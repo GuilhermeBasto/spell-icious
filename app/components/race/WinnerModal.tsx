@@ -1,19 +1,18 @@
 import { motion, AnimatePresence } from "motion/react";
 import { getEmojiName } from "~/config/emojis";
+import { getGoogleMapsUrl } from "./utils";
 import type { Racer } from "./types";
 
 interface WinnerModalProps {
   winner: Racer | null;
   showModal: boolean;
   onClose: () => void;
-  getGoogleMapsUrl: (restaurant: any) => string;
 }
 
 export default function WinnerModal({
   winner,
   showModal,
   onClose,
-  getGoogleMapsUrl,
 }: WinnerModalProps) {
   if (!winner || !showModal) return null;
 
@@ -303,7 +302,12 @@ export default function WinnerModal({
               {winner.restaurant &&
                 winner.restaurant.address !== "Manual entry" && (
                   <motion.a
-                    href={getGoogleMapsUrl(winner.restaurant)}
+                    href={getGoogleMapsUrl(
+                      winner.restaurant.name,
+                      winner.restaurant.address,
+                      winner.restaurant.lat,
+                      winner.restaurant.lng,
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-linear-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-5 px-8 rounded-xl text-center flex items-center justify-center gap-3 transition-all relative overflow-hidden group shadow-lg"

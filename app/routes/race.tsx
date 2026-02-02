@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router";
 import type { Route } from "./+types/race";
 import { useRestaurants } from "../contexts/RestaurantsAPIContext";
-import { GOOGLE_MAPS_URL } from "~/lib/constants";
 import {
   RaceHeader,
   CountdownDisplay,
@@ -12,6 +11,7 @@ import {
   RaceInstructions,
   ConfettiEffect,
   getRestaurantIcon,
+  getGoogleMapsUrl,
   colors,
   type Racer,
 } from "~/components/race";
@@ -154,17 +154,6 @@ export default function Race() {
     );
   }, []);
 
-  const getGoogleMapsUrl = useCallback((restaurant: any) => {
-    if (restaurant.lat && restaurant.lng) {
-      return `${GOOGLE_MAPS_URL}${restaurant.lat},${restaurant.lng}`;
-    }
-
-    const query = encodeURIComponent(
-      `${restaurant.name}, ${restaurant.address}`,
-    );
-    return `${GOOGLE_MAPS_URL}${query}`;
-  }, []);
-
   return (
     <div className="min-h-screen text-gray-900 dark:text-white overflow-hidden">
       <RaceHeader onBack={() => navigate(-1)} />
@@ -188,7 +177,6 @@ export default function Race() {
             winner={winner}
             showModal={showWinnerModal}
             onClose={resetRace}
-            getGoogleMapsUrl={getGoogleMapsUrl}
           />
 
           <div className="space-y-4">

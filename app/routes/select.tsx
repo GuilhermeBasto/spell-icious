@@ -15,7 +15,7 @@ const searchCache = new Map<
   {
     data: PlaceResult[];
     timestamp: number;
-    coordinates: { lat: number; lng: number };
+    coordinates: { lat: number; lng: number; city?: string };
   }
 >();
 
@@ -25,10 +25,19 @@ const MAX_CACHE_SIZE = 10; // Limit cache to 10 entries to prevent memory issues
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const address = url.searchParams.get("address") || "";
-  const radius = Number(url.searchParams.get("radius")) || 1000;
+  const requestedRadius = Number(url.searchParams.get("radius")) || 1000;
+
+  // Limit radius to 5km max to avoid showing restaurants too far away
+  const radius = Math.min(requestedRadius, 5000);
 
   if (!address) {
     return { restaurants: [], address: "", radius, coordinates: null };
+  }
+
+  if (requestedRadius !== radius) {
+    console.log(
+      `⚠️ Raio ajustado de ${requestedRadius}m para ${radius}m (máximo permitido)`,
+    );
   }
 
   const cacheKey = `${address}-${radius}`;
@@ -71,10 +80,18 @@ export async function loader({ request }: Route.LoaderArgs) {
       };
     }
 
+    console.log(`🎯 Buscando restaurantes em "${address}":`, {
+      lat: coordinates.lat,
+      lng: coordinates.lng,
+      radius: `${radius}m`,
+      city: coordinates.city || "não especificada",
+    });
+
     const restaurants = await searchRestaurants(
       coordinates.lat,
       coordinates.lng,
       radius,
+      coordinates.city,
     );
 
     // Evict oldest entries if cache is too large
@@ -181,6 +198,8 @@ export default function Select({ loaderData }: Route.ComponentProps) {
           cuisine: place.tags.cuisine,
         }),
       );
+
+      console.log(restaurantList);
       setRestaurants(restaurantList);
 
       if (loaderData.fromCache) {

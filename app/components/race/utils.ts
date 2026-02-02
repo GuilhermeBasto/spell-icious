@@ -1,3 +1,20 @@
+import { GOOGLE_MAPS_URL } from "~/lib/constants";
+
+/**
+ * Generates a Google Maps URL for a restaurant
+ */
+export function getGoogleMapsUrl(
+  name: string,
+  address: string,
+  lat?: number,
+  lng?: number,
+): string {
+  if (lat && lng) {
+    return `${GOOGLE_MAPS_URL}${lat},${lng}`;
+  }
+  return `${GOOGLE_MAPS_URL}${encodeURIComponent(name + " " + address)}`;
+}
+
 /**
  * Mapeia tipos de restaurantes para ícones apropriados
  */

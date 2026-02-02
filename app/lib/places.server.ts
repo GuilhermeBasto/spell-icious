@@ -215,7 +215,7 @@ function convertOSMToPlace(osmElement: any): PlaceResult {
  */
 export async function geocodeAddress(
   address: string,
-): Promise<{ lat: number; lng: number } | null> {
+): Promise<{ lat: number; lng: number; city?: string } | null> {
   try {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
 
@@ -235,11 +235,24 @@ export async function geocodeAddress(
     const data = await response.json();
 
     if (data.length > 0) {
+      const result = data[0];
+      const city =
+        result.address?.city ||
+        result.address?.town ||
+        result.address?.village ||
+        result.address?.municipality ||
+        extractCityFromAddress(address);
+
       const coords = {
-        lat: parseFloat(data[0].lat),
-        lng: parseFloat(data[0].lon),
+        lat: parseFloat(result.lat),
+        lng: parseFloat(result.lon),
+        city,
       };
-      console.log("✅ OSM Geocoding success:", coords);
+      const displayName = result.display_name || "local desconhecido";
+      console.log("✅ OSM Geocoding success:", {
+        ...coords,
+        location: displayName,
+      });
       return coords;
     }
 
@@ -251,19 +264,43 @@ export async function geocodeAddress(
 }
 
 /**
+ * Extract city name from address string
+ */
+function extractCityFromAddress(address: string): string | undefined {
+  const normalized = address.toLowerCase();
+
+  if (normalized.includes("porto")) return "Porto";
+  if (normalized.includes("lisboa") || normalized.includes("lisbon"))
+    return "Lisboa";
+  if (normalized.includes("coimbra")) return "Coimbra";
+  if (normalized.includes("braga")) return "Braga";
+  if (normalized.includes("faro")) return "Faro";
+  if (normalized.includes("aveiro")) return "Aveiro";
+  if (normalized.includes("setúbal") || normalized.includes("setubal"))
+    return "Setúbal";
+  if (normalized.includes("évora") || normalized.includes("evora"))
+    return "Évora";
+  if (normalized.includes("guimarães") || normalized.includes("guimaraes"))
+    return "Guimarães";
+  if (normalized.includes("leiria")) return "Leiria";
+
+  return undefined;
+}
+
+/**
  * Get fallback coordinates based on city name
  */
 function getFallbackCoordinates(
   address: string,
-): { lat: number; lng: number } | null {
+): { lat: number; lng: number; city?: string } | null {
   const normalized = address.toLowerCase();
 
   if (normalized.includes("porto")) {
-    return { lat: 41.1579, lng: -8.6291 };
+    return { lat: 41.1579, lng: -8.6291, city: "Porto" };
   } else if (normalized.includes("lisboa") || normalized.includes("lisbon")) {
-    return { lat: 38.7223, lng: -9.1393 };
+    return { lat: 38.7223, lng: -9.1393, city: "Lisboa" };
   } else if (normalized.includes("coimbra")) {
-    return { lat: 40.2033, lng: -8.4103 };
+    return { lat: 40.2033, lng: -8.4103, city: "Coimbra" };
   }
 
   return null;
@@ -299,8 +336,14 @@ export async function searchRestaurants(
   lat: number,
   lng: number,
   radius: number,
+  city?: string,
 ): Promise<PlaceResult[]> {
-  console.log("🔍 Iniciando busca via Overpass API", { lat, lng, radius });
+  console.log("🔍 Iniciando busca via Overpass API", {
+    lat,
+    lng,
+    radius,
+    city,
+  });
 
   try {
     const query = `
@@ -367,11 +410,60 @@ export async function searchRestaurants(
             return false;
           }
 
+          // Additional distance check to ensure results are within radius
+          const elementLat = el.lat || el.center?.lat;
+          const elementLng = el.lon || el.center?.lon;
+
+          if (elementLat && elementLng) {
+            const distance = calculateDistance(
+              lat,
+              lng,
+              elementLat,
+              elementLng,
+            );
+            if (distance > radius) {
+              console.log(
+                `⚠️ Elemento ${el.id} (${el.tags?.name}) está a ${Math.round(distance)}m (limite: ${radius}m) - ignorando`,
+              );
+              return false;
+            }
+
+            const elementCity = el.tags?.["addr:city"];
+            if (!elementCity) {
+              console.log(
+                `⚠️ Elemento ${el.id} (${el.tags?.name}) não tem cidade - ignorando`,
+              );
+              return false;
+            }
+
+            // City filter - if city is specified, only include restaurants from that city
+            if (city && elementCity) {
+              // Normalize both cities for comparison (case insensitive)
+              const normalizedSearchCity = city.toLowerCase().trim();
+              const normalizedElementCity = elementCity.toLowerCase().trim();
+
+              if (normalizedElementCity !== normalizedSearchCity) {
+                console.log(
+                  `⚠️ Elemento ${el.id} (${el.tags?.name}) está em "${elementCity}" mas procura é por "${city}" - ignorando`,
+                );
+                return false;
+              }
+            }
+
+            // Log da cidade para debug
+            const cityDisplay = elementCity;
+            console.log(
+              `✅ Elemento ${el.id} (${el.tags?.name}) em ${cityDisplay} - ${Math.round(distance)}m`,
+            );
+          }
+
           return true;
         })
         .map((el: any) => convertOSMToPlace(el));
 
-      console.log(`✅ ${restaurants.length} restaurantes válidos`);
+      console.log(
+        `✅ ${restaurants.length} restaurantes válidos após filtragem por distância`,
+      );
 
       if (restaurants.length > 0) {
         return restaurants;
