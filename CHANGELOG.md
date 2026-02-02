@@ -1,213 +1,128 @@
 # Changelog
 
-Todas as mudanças notáveis deste projeto serão documentadas neste ficheiro.
+All notable changes to this project will be documented in this file.
 
-O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.2.0] - 2026-02-02
+
+### ✨ Added
+
+#### UI/UX Enhancements
+
+- **Fixed Header** in restaurant selection page
+  - Search bar always visible while scrolling
+  - Back button always accessible
+  - Location info persistently displayed
+- **Custom Orange Scrollbar** matching app theme
+  - Visible on all browsers (Chrome, Firefox, Safari, Edge)
+  - Light and dark mode support
+  - Smooth hover and active states
+- **Optimized Participants Panel** on desktop
+  - Controlled height with smooth scrolling
+  - Better alignment with restaurant list
+  - Improved mobile responsiveness
+
+#### Location Features
+
+- **Google Maps Integration**
+  - "View on Google Maps" button on restaurant cards
+  - Direct links with precise coordinates (lat/lng)
+  - Fallback to address search if coordinates unavailable
+  - Centralized utility function for URL generation
+- **City-Based Filtering**
+  - Smart city detection from geocoding results
+  - Filters restaurants by `addr:city` tag
+  - Prevents results from other cities
+  - Support for major Portuguese cities
+- **Enhanced Distance Validation**
+  - Additional distance check after API results
+  - Maximum radius limit of 5km
+  - Detailed logging for debugging
+  - Improved accuracy in results
+
+#### Restaurant Card Improvements
+
+- **Better CTAs Layout**
+  - Website link with prominent styling
+  - Google Maps button with full width
+  - Phone number as non-clickable information
+  - Organized CTA section
+- **"Pick Your Icon" Button**
+  - More intuitive label
+  - Removed redundant "Selected" badge
+  - Improved button styling
+
+### 🐛 Fixed
+
+- Fixed double scrollbar issue
+- Fixed scrollbar visibility on macOS
+- Fixed participants panel overflow on desktop
+- Fixed emoji picker positioning in scrollable container
+- Fixed restaurant card lat/lng prop passing
+
+### 🔧 Changed
+
+- Moved `getGoogleMapsUrl` to shared utils
+- Updated `RestaurantCard` to use coordinates
+- Enhanced OpenStreetMap geocoding with city extraction
+- Improved logging for search and filtering operations
 
 ## [1.0.0] - 2026-01-31
 
-### 🎉 Lançamento Inicial
+### 🎉 Initial Release
 
-Primeira versão completa e funcional do Restaurant Race!
+First complete and functional version of Restaurant Race!
 
-### ✨ Features Adicionadas
+### ✨ Features Added
 
 #### Core Features
 
-- **Página Inicial** - Interface para introduzir morada e raio de pesquisa
-  - Input de morada com validação
-  - Slider de raio ajustável (500m - 5km)
-  - Design moderno com gradientes e animações
-- **Seleção de Restaurantes** - Lista e seleção de restaurantes
-  - Grid responsivo de cards de restaurantes
-  - Pesquisa/filtro em tempo real
-  - Adição manual de restaurantes
-  - Painel lateral com participantes selecionados
-  - Informações detalhadas: rating, reviews, preço
-- **Corrida Animada** - Corrida visual de restaurantes
-  - Contagem regressiva (3, 2, 1, GO!)
-  - Animações suaves e realistas
-  - Emojis únicos para cada participante
-  - Efeitos visuais (trails, bounce)
-  - Celebração do vencedor com confetti
-  - Opção de correr novamente
+- **Home Page** - Interface to enter address and search radius
+  - Address input with validation
+  - Adjustable radius slider (500m - 5km)
+  - Modern design with gradients and animations
+- **Restaurant Selection** - List and select restaurants
+  - Responsive grid of restaurant cards
+  - Real-time search/filter
+  - Manual restaurant addition
+  - Side panel with selected participants
+  - Detailed information: rating, reviews, price
+- **Animated Race** - Visual restaurant race
+  - Countdown (3, 2, 1, GO!)
+  - Smooth and realistic animations
+  - Unique emojis for each participant
+  - Visual effects (trails, bounce)
+  - Winner celebration with confetti
+  - Race again option
 
 #### Design & UX
 
-- Dark mode automático (segue preferência do sistema)
-- Interface totalmente responsiva (mobile-first)
-- Animações suaves e profissionais
-- Gradientes modernos e vibrantes
-- Micro-interactions em hover/click
-- Loading states personalizados
+- Automatic dark mode (follows system preference)
+- Fully responsive interface (mobile-first)
+- Smooth and professional animations
+- Modern and vibrant gradients
+- Micro-interactions on hover/click
+- Custom loading states
 
-#### Componentes Reutilizáveis
+#### Reusable Components
 
-- `Loading` - Componente de loading animado
-- `RestaurantCard` - Card de restaurante estilizado
+- `Loading` - Animated loading component
+- `RestaurantCard` - Styled restaurant card
 
-#### Integrações
+#### Integrations
 
-- Google Places API (opcional)
-  - Geocoding de moradas
-  - Pesquisa de restaurantes nearby
-  - Fallback para dados mock
-- Dados mock para uso sem API key
+- Google Places API (optional)
+  - Address geocoding
+  - Nearby restaurant search
+  - Fallback to mock data
+- Mock data for use without API key
 
-### 🛠️ Tecnologias
+### 🛠️ Technologies
 
 - **React Router v7** - Framework mode
-- **Tailwind CSS v4** - Estilização
+- **Tailwind CSS v4** - Styling
 - **TypeScript** - Type safety
 - **Vite** - Build tool
 - **Node.js 18+** - Runtime
-
-### 📚 Documentação
-
-Documentação completa incluída:
-
-- `README.md` - Visão geral e quick start
-- `USER_GUIDE.md` - Guia detalhado de uso
-- `GOOGLE_PLACES_SETUP.md` - Setup da API
-- `DEPLOYMENT.md` - Guia de deploy
-- `ROADMAP.md` - Features futuras
-- `CONTRIBUTING.md` - Guia de contribuição
-- `LICENSE` - MIT License
-
-### 🔧 Configuração
-
-- Dockerfile incluído
-- Docker Compose ready
-- Configuração Vercel/Netlify
-- Variáveis de ambiente (.env.example)
-- .gitignore completo
-
-### 📦 Package Scripts
-
-```json
-{
-  "dev": "react-router dev",
-  "build": "react-router build",
-  "start": "react-router-serve ./build/server/index.js",
-  "typecheck": "react-router typegen && tsc"
-}
-```
-
-### 🎨 Design Highlights
-
-- 10 cores vibrantes para participantes
-- 10 emojis de comida diferentes
-- Animações CSS customizadas
-- Gradientes em múltiplas páginas
-- Scrollbar estilizado
-- Modo escuro elegante
-
-### 🌐 Rotas
-
-- `/` - Página inicial
-- `/select` - Seleção de restaurantes
-- `/race` - Corrida animada
-
-### 🔒 Segurança
-
-- API keys via variáveis de ambiente
-- Não expõe secrets no código
-- .env no .gitignore
-- Validação de inputs
-
----
-
-## [Unreleased]
-
-### 🚀 Planeado para Próximas Versões
-
-Ver [ROADMAP.md](./ROADMAP.md) para lista completa.
-
-**Próxima Major (v2.0.0):**
-
-- Histórico de corridas
-- Sistema de autenticação
-- Equipas e grupos
-- Partilha de resultados
-
-**Próxima Minor (v1.1.0):**
-
-- PWA (Progressive Web App)
-- Melhor UX mobile
-- Filtros avançados
-- Temas customizáveis
-
-**Patches (v1.0.x):**
-
-- Bug fixes
-- Performance improvements
-- Documentação updates
-
----
-
-## Como Atualizar
-
-### Para Utilizadores
-
-```bash
-# Pull latest changes
-git pull origin main
-
-# Update dependencies
-npm install
-
-# Rebuild
-npm run build
-```
-
-### Para Developers
-
-```bash
-# Pull latest
-git pull origin develop
-
-# Update and check
-npm install
-npm run typecheck
-npm run build
-```
-
----
-
-## Suporte a Versões
-
-| Versão | Status   | Suporte até | Notas        |
-| ------ | -------- | ----------- | ------------ |
-| 1.0.x  | ✅ Ativo | TBD         | Versão atual |
-
----
-
-## Breaking Changes
-
-Nenhum até agora.
-
----
-
-## Deprecations
-
-Nenhum até agora.
-
----
-
-## Migration Guides
-
-Não aplicável para v1.0.0 (versão inicial).
-
----
-
-## Contributors
-
-Obrigado a todos os contribuidores! 🎉
-
-Lista será atualizada com contribuições futuras.
-
----
-
-[1.0.0]: https://github.com/your-username/restaurant-race/releases/tag/v1.0.0
-[Unreleased]: https://github.com/your-username/restaurant-race/compare/v1.0.0...HEAD

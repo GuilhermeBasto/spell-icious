@@ -1,8 +1,8 @@
 /**
  * Server-only utilities for OpenStreetMap + Overpass API
  *
- * Usa OpenStreetMap (gratuito e sem necessidade de API key)
- * Com fallback para mock data quando necessário
+ * Uses OpenStreetMap (free and no API key needed)
+ * With fallback to mock data when necessary
  */
 
 import type { PlaceResult } from "../types/api";
@@ -133,7 +133,7 @@ const mockRestaurantsLisboa: PlaceResult[] = [
 ];
 
 /**
- * Converter resultado do OpenStreetMap/Overpass para formato unificado
+ * Convert OpenStreetMap/Overpass result to unified format
  */
 function convertOSMToPlace(osmElement: any): PlaceResult {
   const tags = osmElement.tags || {};
@@ -185,18 +185,18 @@ function convertOSMToPlace(osmElement: any): PlaceResult {
   const lon = osmElement.lon || osmElement.center?.lon || 0;
 
   return {
-    // Estrutura Overpass API
+    // Overpass API structure
     type: osmElement.type || "node",
     id: osmElement.id,
     lat,
     lon,
     tags,
 
-    // Campos computados para compatibilidade
+    // Computed fields for compatibility
     place_id: `${osmElement.type || "node"}${osmElement.id}`,
-    name: tags.name || "Restaurante sem nome",
+    name: tags.name || "Restaurant without name",
     formatted_address,
-    rating: undefined, // OSM não tem ratings nativos
+    rating: undefined, // OSM doesn't have native ratings
     user_ratings_total: undefined,
     price_level: undefined,
     types: [amenity, ...cuisines],
@@ -206,12 +206,12 @@ function convertOSMToPlace(osmElement: any): PlaceResult {
         lng: lon,
       },
     },
-    opening_hours: tags.opening_hours ? undefined : undefined, // OSM tem opening_hours, mas requer parser complexo
+    opening_hours: tags.opening_hours ? undefined : undefined, // OSM has opening_hours, but requires complex parser
   };
 }
 
 /**
- * Geocode an address to coordinates usando OpenStreetMap Nominatim
+ * Geocode an address to coordinates using OpenStreetMap Nominatim
  */
 export async function geocodeAddress(
   address: string,
@@ -223,7 +223,7 @@ export async function geocodeAddress(
 
     const response = await fetch(url, {
       headers: {
-        "User-Agent": "RestaurantRace/1.0", // OSM requer User-Agent
+        "User-Agent": "RestaurantRace/1.0", // OSM requires User-Agent
       },
     });
 
@@ -248,7 +248,7 @@ export async function geocodeAddress(
         lng: parseFloat(result.lon),
         city,
       };
-      const displayName = result.display_name || "local desconhecido";
+      const displayName = result.display_name || "unknown location";
       console.log("✅ OSM Geocoding success:", {
         ...coords,
         location: displayName,
@@ -330,7 +330,7 @@ function calculateDistance(
 }
 
 /**
- * Search for restaurants near a location usando OpenStreetMap + Overpass API
+ * Search for restaurants near a location using OpenStreetMap + Overpass API
  */
 export async function searchRestaurants(
   lat: number,
@@ -338,7 +338,7 @@ export async function searchRestaurants(
   radius: number,
   city?: string,
 ): Promise<PlaceResult[]> {
-  console.log("🔍 Iniciando busca via Overpass API", {
+  console.log("🔍 Starting search via Overpass API", {
     lat,
     lng,
     radius,
@@ -364,7 +364,7 @@ export async function searchRestaurants(
 
     const url = "https://overpass-api.de/api/interpreter";
 
-    console.log("🗺️ OpenStreetMap Overpass: Fazendo request para API");
+    console.log("🗺️ OpenStreetMap Overpass: Making API request");
 
     const response = await fetch(url, {
       method: "POST",
@@ -382,7 +382,7 @@ export async function searchRestaurants(
     const data = await response.json();
     const totalElements = data.elements?.length || 0;
 
-    console.log(`📊 Overpass retornou ${totalElements} elementos`);
+    console.log(`📊 Overpass returned ${totalElements} elements`);
 
     if (data.elements && Array.isArray(data.elements)) {
       const restaurants = data.elements
@@ -399,13 +399,13 @@ export async function searchRestaurants(
           const isValidAmenity = validAmenities.includes(amenity);
 
           if (!hasName) {
-            console.log(`⚠️ Elemento ${el.id} sem nome - ignorando`);
+            console.log(`⚠️ Element ${el.id} without name - ignoring`);
             return false;
           }
 
           if (!isValidAmenity) {
             console.log(
-              `⚠️ Elemento ${el.id} (${el.tags?.name}) não é restaurante (amenity=${amenity}) - ignorando`,
+              `⚠️ Element ${el.id} (${el.tags?.name}) is not a restaurant (amenity=${amenity}) - ignoring`,
             );
             return false;
           }
@@ -423,7 +423,7 @@ export async function searchRestaurants(
             );
             if (distance > radius) {
               console.log(
-                `⚠️ Elemento ${el.id} (${el.tags?.name}) está a ${Math.round(distance)}m (limite: ${radius}m) - ignorando`,
+                `⚠️ Element ${el.id} (${el.tags?.name}) is at ${Math.round(distance)}m (limit: ${radius}m) - ignoring`,
               );
               return false;
             }
@@ -431,7 +431,7 @@ export async function searchRestaurants(
             const elementCity = el.tags?.["addr:city"];
             if (!elementCity) {
               console.log(
-                `⚠️ Elemento ${el.id} (${el.tags?.name}) não tem cidade - ignorando`,
+                `⚠️ Element ${el.id} (${el.tags?.name}) has no city - ignoring`,
               );
               return false;
             }
@@ -444,16 +444,16 @@ export async function searchRestaurants(
 
               if (normalizedElementCity !== normalizedSearchCity) {
                 console.log(
-                  `⚠️ Elemento ${el.id} (${el.tags?.name}) está em "${elementCity}" mas procura é por "${city}" - ignorando`,
+                  `⚠️ Element ${el.id} (${el.tags?.name}) is in "${elementCity}" but search is for "${city}" - ignoring`,
                 );
                 return false;
               }
             }
 
-            // Log da cidade para debug
+            // City log for debugging
             const cityDisplay = elementCity;
             console.log(
-              `✅ Elemento ${el.id} (${el.tags?.name}) em ${cityDisplay} - ${Math.round(distance)}m`,
+              `✅ Element ${el.id} (${el.tags?.name}) in ${cityDisplay} - ${Math.round(distance)}m`,
             );
           }
 
@@ -462,7 +462,7 @@ export async function searchRestaurants(
         .map((el: any) => convertOSMToPlace(el));
 
       console.log(
-        `✅ ${restaurants.length} restaurantes válidos após filtragem por distância`,
+        `✅ ${restaurants.length} valid restaurants after distance filtering`,
       );
 
       if (restaurants.length > 0) {

@@ -42,6 +42,12 @@ npm install && npm run dev
 - **🏁 Animated Race**: Exciting race with smooth animations (Motion/Framer Motion)
 - **🎨 Dynamic Icons**: Each restaurant races with an icon based on its cuisine type
 - **💎 Modern Design**: Beautiful interface with consistent orange theme and dark mode
+- **📍 Fixed Header**: Always-visible search bar and navigation in restaurant selection
+- **🗺️ Google Maps Integration**: Direct links to restaurants on Google Maps with coordinates
+- **🏙️ City Filtering**: Smart filtering to show only restaurants from the searched city
+- **📏 Distance Validation**: Restaurants are filtered by actual distance, not just API results
+- **🎨 Custom Scrollbar**: Orange-themed scrollbar matching the app's design
+- **📱 Optimized Layout**: Participants panel with controlled height and smooth scrolling on desktop
 - **⚡ Server-Side Cache**: Cached responses (5min TTL) for performance
 - **🎭 MSW Mock API**: Works without API key using Mock Service Worker
 - **🌐 Fully in English**: Complete interface translation
@@ -262,6 +268,36 @@ duration: Math.random() * 8 + 12, // Change values here (12-20 seconds)
 ```
 
 ## 🎨 Recent Updates
+
+### v2.2.0 - UI/UX Enhancements & Location Features
+
+#### 🎨 UI/UX Improvements
+
+- **Fixed Header** - Search bar and navigation stay visible while scrolling
+- **Orange Scrollbar** - Custom-styled scrollbar matching the app's theme
+- **Optimized Participants Panel** - Desktop layout with controlled height and smooth scrolling
+- **Better Alignment** - Consistent spacing between restaurant list and participants panel
+
+#### 🗺️ Location Features
+
+- **Google Maps Integration** - Direct "View on Google Maps" button with precise coordinates
+- **City Filtering** - Smart filtering to show only restaurants from the searched city
+- **Distance Validation** - Additional distance check ensures results within specified radius
+- **Improved Geocoding** - Enhanced city detection from OpenStreetMap Nominatim API
+
+#### 🐛 Bug Fixes
+
+- ✅ Fixed scrollbar visibility issues
+- ✅ Fixed double scrollbar problem
+- ✅ Improved restaurant card layout with better CTAs
+- ✅ Enhanced phone number display (non-clickable, information only)
+
+#### 📚 Code Quality
+
+- Centralized Google Maps URL utility function
+- Better separation of concerns
+- Improved TypeScript types
+- Enhanced logging for debugging
 
 ### v2.1.0 - Architecture Refactoring & Bug Fixes
 

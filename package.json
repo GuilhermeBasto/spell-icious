@@ -1,5 +1,6 @@
 {
   "name": "spell-icious",
+  "version": "2.2.0",
   "private": true,
   "type": "module",
   "engines": {
