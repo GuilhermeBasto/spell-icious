@@ -10,24 +10,12 @@ A magical web application to help teams decide where to have lunch through an an
 
 ## ⚡ Quick Start
 
-Get started in 5 minutes? **[See Quick Start Guide](./QUICKSTART.md)**
-
 ```bash
 npm install && npm run dev
 ```
 
 ## 📖 Documentation
 
-- ⚡ **[Quick Start](./QUICKSTART.md)** - Get started in 5 minutes
-- 📚 **[User Guide](./USER_GUIDE.md)** - How to use the application
-- 🔍 **[Fuzzy Search Guide](./FUZZY_SEARCH.md)** - Intelligent search with Fuse.js
-- 🗺️ **[OpenStreetMap Guide](./OPENSTREETMAP_GUIDE.md)** - How OSM integration works
-- 🏗️ **[API Architecture](./API_ARCHITECTURE.md)** - API Architecture (Resource Routes)
-- 🏗️ **[SSR + Cache Architecture](./SSR_CACHE_ARCHITECTURE.md)** - Server-Side Rendering with Cache
-- 🎭 **[MSW Guide](./MSW_GUIDE.md)** - Mock Service Worker (development without API)
-- 🚀 **[Deploy Guide](./DEPLOYMENT.md)** - How to deploy
-- 🗺️ **[Roadmap](./ROADMAP.md)** - Future features and improvements
-- 🤝 **[Contributing](./CONTRIBUTING.md)** - How to contribute
 - 📝 **[Changelog](./CHANGELOG.md)** - Version history
 
 ## 🎯 Features
@@ -107,10 +95,6 @@ spell-icious/
 ├── Dockerfile               # Docker configuration (Node.js 24.11.1)
 ├── .nvmrc                   # Node version (24.11.1)
 ├── README.md                # This file
-├── IMAGES_QUICKSTART.md     # Image management guide
-├── IMAGE_OPTIMIZATION.md    # Technical optimization docs
-├── REFACTORING_SUMMARY.md   # Recent refactoring details
-├── RACE_ARCHITECTURE.md     # Component architecture guide
 └── ... (other docs)
 ```
 

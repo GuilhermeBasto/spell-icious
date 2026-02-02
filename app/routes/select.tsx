@@ -388,7 +388,7 @@ export default function Select({ loaderData }: Route.ComponentProps) {
       </div>
 
       {/* Content with padding to account for fixed header */}
-      <div className="container mx-auto px-4 pt-[200px] pb-8">
+      <div className="container mx-auto px-4 pt-[230px] pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
           {/* Restaurants List */}
           <div className="lg:col-span-2">
