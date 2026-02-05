@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { getEmojiName } from "~/config/emojis";
+import Avatar from "../Avatar";
 import type { Racer } from "./types";
 
 interface RaceLaneProps {
@@ -27,7 +28,7 @@ export default function RaceLane({ racer, index, isRacing }: RaceLaneProps) {
       className="relative"
     >
       <motion.div
-        className="bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/20 p-4 relative overflow-hidden"
+        className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl border-2 border-white/20 p-2.5 sm:p-3 md:p-4 relative overflow-hidden"
         whileHover={{
           borderColor: "rgba(255, 255, 255, 0.4)",
           boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
@@ -58,34 +59,31 @@ export default function RaceLane({ racer, index, isRacing }: RaceLaneProps) {
         {/* Track Lines */}
         <div className="absolute inset-0 flex justify-around px-4">
           {[...Array(10)].map((_, i) => (
-            <div
-              key={i}
-              className="w-0.5 bg-gray-300 dark:bg-white/10"
-            ></div>
+            <div key={i} className="w-0.5 bg-gray-300 dark:bg-white/10"></div>
           ))}
         </div>
 
         {/* Lane Header */}
-        <div className="relative flex items-center mb-2">
+        <div className="relative flex items-center mb-1.5 sm:mb-2">
           <div
-            className={`bg-linear-to-r ${racer.color} px-3 py-1 rounded-lg font-bold text-sm mr-2`}
+            className={`bg-linear-to-r ${racer.color} px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 rounded-md sm:rounded-lg font-bold text-xs sm:text-sm mr-1.5 sm:mr-2`}
           >
             #{index + 1}
           </div>
           {racer.emoji &&
             (racer.emoji.startsWith("/emojis/") ||
               racer.emoji.startsWith("data:image/")) && (
-              <div className="font-semibold text-gray-900 dark:text-white mr-2 capitalize">
+              <div className="hidden sm:block font-semibold text-gray-900 dark:text-white mr-2 capitalize text-sm md:text-base">
                 {getEmojiName(racer.emoji)}:
               </div>
             )}
-          <div className="font-semibold text-gray-900 dark:text-white truncate flex-1">
+          <div className="font-semibold text-gray-900 dark:text-white truncate flex-1 text-xs sm:text-sm md:text-base">
             {racer.name}
           </div>
         </div>
 
         {/* Race Track */}
-        <div className="relative h-16 bg-gray-100 dark:bg-gray-800/50 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+        <div className="relative h-12 sm:h-14 md:h-16 bg-gray-100 dark:bg-gray-800/50 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
           {/* Speed Lines */}
           {isRacing && (
             <div className="absolute inset-0">
@@ -138,7 +136,7 @@ export default function RaceLane({ racer, index, isRacing }: RaceLaneProps) {
               }}
             >
               <motion.div
-                className="text-5xl"
+                className="text-3xl sm:text-4xl md:text-5xl"
                 animate={
                   isRacing
                     ? {
@@ -162,10 +160,12 @@ export default function RaceLane({ racer, index, isRacing }: RaceLaneProps) {
                   <img
                     src={racer.emoji}
                     alt={racer.name}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full object-cover"
                   />
                 ) : (
-                  <span className="text-4xl">{racer.emoji}</span>
+                  <span className="text-2xl sm:text-3xl md:text-4xl">
+                    {racer.emoji}
+                  </span>
                 )}
               </motion.div>
 

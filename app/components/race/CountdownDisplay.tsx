@@ -16,7 +16,7 @@ export default function CountdownDisplay({
   if (isRacing || winner) return null;
 
   return (
-    <div className="text-center mb-8">
+    <div className="text-center mb-6 sm:mb-8">
       <AnimatePresence mode="wait">
         {countdown !== null ? (
           <motion.div
@@ -35,7 +35,7 @@ export default function CountdownDisplay({
             }}
             className="relative"
           >
-            <div className="text-9xl font-bold text-gray-900 dark:text-white">
+            <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-gray-900 dark:text-white">
               {countdown === 0 ? "GO!" : countdown}
             </div>
           </motion.div>
@@ -43,7 +43,7 @@ export default function CountdownDisplay({
           <motion.button
             key="start-button"
             onClick={onStartRace}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-6 px-12 rounded-2xl text-2xl shadow-2xl relative overflow-hidden group"
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-xl sm:rounded-2xl text-lg sm:text-xl md:text-2xl shadow-2xl relative overflow-hidden group"
             initial={{ scale: 0, rotate: -180 }}
             animate={{
               scale: 1,

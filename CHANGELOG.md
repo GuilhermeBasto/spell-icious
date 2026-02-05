@@ -5,6 +5,112 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-02-05
+
+### ✨ Added
+
+#### Avatar Component System
+
+- **New Reusable Avatar Component** (`app/components/Avatar.tsx`)
+  - Supports custom images (data URLs, file paths) and emoji characters
+  - Six size presets: xs (24px), sm (32px), md (40px), lg (48px), xl (64px), 2xl (80px)
+  - Optional edit icon overlay on hover with smooth animations
+  - Dark mode support with adaptive styling
+  - Framer Motion integration for smooth scale effects
+  - Fallback icon support when no image/emoji provided
+- **ResponsiveAvatar Component**
+  - Automatically scales based on screen size (mobile, tablet, desktop)
+  - Separate size props for each breakpoint
+  - Perfect for mobile-first design
+- **AvatarGroup Component**
+  - Display multiple avatars with overlapping layout
+  - Shows "+N" indicator for remaining avatars
+  - Configurable max display limit
+- **Comprehensive Documentation**
+  - Complete usage guide in `app/components/Avatar/README.md`
+  - Props reference and examples
+  - Integration examples for all use cases
+
+#### Mobile Responsiveness
+
+- **Complete Mobile Optimization** across all pages
+  - Quick Race page: Responsive headings (text-3xl → text-5xl), adaptive padding (p-4 → p-8)
+  - Home page: Mobile-friendly forms, smaller buttons, responsive Quick Race CTA
+  - Select page: Reordered layout (participants first on mobile), mobile-optimized header
+  - Race page: Responsive countdown (text-6xl → text-9xl), adaptive race lanes
+  - WinnerModal: Responsive trophy (text-6xl → text-9xl), mobile-friendly buttons
+- **Touch-Friendly Interface**
+  - Larger touch targets for all interactive elements
+  - Proper button sizing (py-3 → py-5 on desktop)
+  - Active states with `active:scale-95` for better touch feedback
+  - Optimized hit areas for emoji pickers
+- **Responsive Layout Improvements**
+  - Truncated text for long restaurant names and addresses
+  - Adaptive grids (4 columns for team photos on mobile)
+  - Better spacing with responsive gap and padding classes
+  - Full-width emoji pickers on mobile with max-height constraints
+
+#### Emoji Picker Enhancements
+
+- **Larger Food Emojis** in all emoji pickers
+  - Increased from `text-lg/xl` (18-20px) to `text-2xl/3xl` (24-30px)
+  - Better visibility and easier selection on mobile devices
+- **Improved Spacing and Layout**
+  - Increased gaps from `gap-1` to `gap-2` for better separation
+  - Increased padding from `p-1` to `p-2` for larger touch targets
+  - Consistent sizing across ManualRestaurantInput, ParticipantItem, Select page, and RestaurantCard
+- **Enhanced Touch Targets**
+  - Minimum 48x48px touch area (WCAG AAA compliant)
+  - Hover and active states for better feedback
+  - Smooth scale animations (hover: 1.25x, active: 0.95x)
+
+### 🔄 Changed
+
+#### Component Refactoring with Avatar
+
+- **ParticipantItem Component**
+  - Replaced manual emoji/image rendering with `<Avatar>` component
+  - Added `showEditIcon` for consistent edit overlay behavior
+  - Maintains all original functionality with cleaner code
+- **RaceLane Component**
+  - Refactored racer icon display to use `<Avatar>`
+  - Preserved all racing animations and effects
+  - Improved code maintainability
+- **WinnerModal Component**
+  - Updated winner display to use `<Avatar size="2xl">`
+  - Maintained glowing animation effect
+  - Consistent responsive sizing
+- **RestaurantCard Component**
+  - Replaced emoji displays in header and "Pick Icon" button
+  - Centralized avatar logic for consistency
+  - Reduced code duplication
+
+#### Code Quality Improvements
+
+- **DRY Principle Applied**
+  - Eliminated repetitive image/emoji conditional rendering across components
+  - Single source of truth for avatar display logic
+  - Easier maintenance and updates
+- **Better Component Organization**
+  - Clear separation of concerns with dedicated Avatar component
+  - Barrel exports for clean imports
+  - Comprehensive inline documentation
+
+### 🎨 Improved
+
+- **Consistency** - All avatars now use the same component with uniform styling
+- **Maintainability** - Change avatar behavior in one place affects all usages
+- **Accessibility** - Built-in alt text support for all avatars
+- **Developer Experience** - Easy to add avatars anywhere with simple props API
+- **User Experience** - Smooth animations and responsive design across all devices
+
+### 📚 Documentation
+
+- Added Avatar component README with complete API reference
+- Updated main README with v2.3.0 changes
+- Added component migration guide
+- Updated project structure documentation
+
 ## [2.2.0] - 2026-02-02
 
 ### ✨ Added

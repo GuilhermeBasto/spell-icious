@@ -39,7 +39,7 @@ npm install && npm run dev
 - **⚡ Server-Side Cache**: Cached responses (5min TTL) for performance
 - **🎭 MSW Mock API**: Works without API key using Mock Service Worker
 - **🌐 Fully in English**: Complete interface translation
-- **📱 Responsive**: Mobile-first design that works on all devices
+- **📱 Fully Responsive**: Complete mobile optimization with touch-friendly interface
 - **🖼️ Image Optimization**: Automatic 97% size reduction with Sharp
 
 ## 📁 Project Structure
@@ -60,8 +60,10 @@ spell-icious/
 │   │   │   ├── utils.ts
 │   │   │   ├── index.ts    # Barrel export
 │   │   │   └── README.md   # Component guide
+│   │   ├── Avatar.tsx       # Reusable avatar component
 │   │   ├── Loading.tsx      # Loading component
 │   │   ├── RestaurantCard.tsx # Restaurant card
+│   │   ├── ParticipantItem.tsx # Participant display
 │   │   └── ManualRestaurantInput.tsx # Manual entry component
 │   ├── contexts/            # React Contexts
 │   │   └── RestaurantsAPIContext.tsx # API Provider
@@ -165,12 +167,14 @@ npm run dev
 ## 🎨 Design Features
 
 - **Consistent Orange Theme** 🧡 - All titles and main buttons use orange color
-- **Smooth Animations** - Fluid transitions and effects
-- **Fully Responsive** - Mobile-first interface
-- **Dark Mode** - Automatic dark theme support
+- **Smooth Animations** - Fluid transitions and effects with Framer Motion
+- **Fully Responsive** - Complete mobile optimization with touch-friendly interface
+- **Reusable Avatar System** - Centralized avatar component for consistency
+- **Dark Mode** - Automatic dark theme support across all components
 - **Clean Countdown** - Simplified countdown without excessive effects
 - **Global Loader** - Orange loading bar during navigation with infinite loop
 - **Minimal & Modern** - Clean code without unnecessary comments
+- **Large Touch Targets** - Optimized for mobile with proper button sizes
 
 ## 🔧 Available Scripts
 
@@ -252,6 +256,54 @@ duration: Math.random() * 8 + 12, // Change values here (12-20 seconds)
 ```
 
 ## 🎨 Recent Updates
+
+### v2.3.0 - Mobile Optimization & Avatar Component
+
+#### 📱 Mobile Responsiveness
+
+- **Complete Mobile Optimization** - All pages now fully responsive and mobile-first
+  - Quick Race page with responsive headings and spacing
+  - Home page with adaptive forms and buttons
+  - Select page with mobile-optimized layout
+  - Race page with responsive race lanes and countdown
+  - Restaurant cards with mobile-friendly touch targets
+- **Responsive Text Sizes** - Everything scales from mobile (sm) to desktop (lg)
+- **Touch-Friendly Buttons** - Larger touch targets and proper sizing for mobile
+- **Emoji Pickers** - Full-width on mobile, scrollable with max-height constraints
+- **Truncated Text** - Long names and addresses won't overflow on small screens
+- **Optimized Grids** - Proper column counts for mobile screens (4 columns for team photos)
+- **Active States** - Added `active:scale-95` for better touch feedback
+
+#### 🎭 Avatar Component System
+
+- **New Reusable Avatar Component** - Centralized avatar handling
+  - Supports custom images (data URLs, file paths)
+  - Supports emoji characters
+  - Six size options (xs, sm, md, lg, xl, 2xl)
+  - Optional edit icon overlay on hover
+  - Smooth animations with Framer Motion
+  - Dark mode support
+- **ResponsiveAvatar** - Automatically scales based on screen size
+- **AvatarGroup** - Display multiple avatars with overlap
+- **Component Refactoring** - Replaced all emoji/image rendering with Avatar component
+  - ParticipantItem now uses Avatar
+  - RaceLane uses Avatar for racer icons
+  - WinnerModal uses Avatar for winner display
+  - RestaurantCard uses Avatar for selections
+
+#### 🎨 Emoji Picker Improvements
+
+- **Larger Food Emojis** - Increased from 18-20px to 24-30px across all pickers
+- **Better Spacing** - Increased gaps and padding (from `gap-1 p-1` to `gap-2 p-2`)
+- **Improved Touch Targets** - Easier to tap on mobile devices
+- **Consistent Sizing** - Uniform emoji sizes across all components
+
+#### 📚 Documentation
+
+- Added comprehensive Avatar component documentation
+- Usage examples and props reference
+- Component migration guide
+- Updated project structure
 
 ### v2.2.0 - UI/UX Enhancements & Location Features
 

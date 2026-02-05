@@ -36,14 +36,14 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-10 md:mb-12"
         >
           <motion.div
             initial={{ scale: 0 }}
@@ -54,15 +54,17 @@ export default function Home() {
               damping: 15,
               delay: 0.2,
             }}
-            className="inline-block mb-6"
+            className="inline-block mb-4 sm:mb-6"
           >
-            <div className="text-6xl mb-4">🪄✨</div>
+            <div className="text-4xl sm:text-5xl md:text-6xl mb-2 sm:mb-4">
+              🪄✨
+            </div>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-5xl font-bold text-orange-600 dark:text-orange-500 mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-600 dark:text-orange-500 mb-3 sm:mb-4"
           >
             Spell-icious
           </motion.h1>
@@ -70,7 +72,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="text-xl text-gray-600 dark:text-gray-300"
+            className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 px-2"
           >
             Cast a spell and let magic decide where you'll have lunch today!
           </motion.p>
@@ -89,19 +91,19 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            <div className="bg-linear-to-r from-orange-500/90 to-red-600/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-orange-400 shadow-xl">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-linear-to-r from-orange-500/90 to-red-600/90 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2 border-orange-400 shadow-xl">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
                 <div className="text-center md:text-left text-white">
-                  <h3 className="text-2xl font-black mb-1 drop-shadow-md">
+                  <h3 className="text-xl sm:text-2xl font-black mb-1 drop-shadow-md">
                     ⚡ Quick Race Mode
                   </h3>
-                  <p className="text-orange-50 font-medium">
+                  <p className="text-sm sm:text-base text-orange-50 font-medium">
                     Skip the search! Add restaurants manually and race instantly
                   </p>
                 </div>
                 <motion.button
                   onClick={() => navigate("/quick-race")}
-                  className="bg-white hover:bg-orange-50 text-orange-600 font-bold py-3 px-8 rounded-xl shadow-lg whitespace-nowrap border-2 border-white"
+                  className="w-full md:w-auto bg-white hover:bg-orange-50 text-orange-600 font-bold py-2.5 sm:py-3 px-6 sm:px-8 rounded-lg sm:rounded-xl shadow-lg whitespace-nowrap border-2 border-white text-sm sm:text-base"
                   whileHover={{
                     scale: 1.05,
                     boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.3)",
@@ -125,13 +127,16 @@ export default function Home() {
           </div>
 
           {/* Search Form */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 border border-gray-100 dark:border-gray-700">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 border border-gray-100 dark:border-gray-700">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4 sm:space-y-5 md:space-y-6"
+            >
               {/* Address Input */}
               <div>
                 <label
                   htmlFor="address"
-                  className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                  className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
                 >
                   📍 Address or Location
                 </label>
@@ -141,7 +146,7 @@ export default function Home() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="E.g., Liberty Avenue, Lisbon"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 dark:focus:ring-orange-900 outline-none transition-all"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-200 dark:focus:ring-orange-900 outline-none transition-all text-sm sm:text-base"
                   required
                 />
 
@@ -154,12 +159,12 @@ export default function Home() {
                       `/select?address=${encodeURIComponent("Av. de Camilo 94, 4300-095 Porto")}&radius=${radius}`,
                     );
                   }}
-                  className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-medium border border-blue-200 dark:border-blue-800 transition-colors group"
+                  className="mt-2 sm:mt-3 inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-xs sm:text-sm font-medium border border-blue-200 dark:border-blue-800 transition-colors group"
                   whileHover={{ scale: 1.02, x: 5 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <motion.span
-                    className="text-lg"
+                    className="text-base sm:text-lg flex-shrink-0"
                     animate={{
                       rotate: [0, -10, 10, -10, 10, 0],
                     }}
@@ -171,9 +176,11 @@ export default function Home() {
                   >
                     🏢
                   </motion.span>
-                  <span className="flex flex-col items-start">
-                    <span className="font-semibold">Blip</span>
-                    <span className="text-xs opacity-70">
+                  <span className="flex flex-col items-start min-w-0">
+                    <span className="font-semibold text-sm sm:text-base">
+                      Blip
+                    </span>
+                    <span className="text-xs opacity-70 truncate max-w-full">
                       Av. de Camilo 94, Porto
                     </span>
                   </span>
@@ -192,7 +199,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="radius"
-                  className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                  className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
                 >
                   📏 Search Radius: {radius}m
                 </label>
@@ -204,7 +211,7 @@ export default function Home() {
                   step="250"
                   value={radius}
                   onChange={(e) => setRadius(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  className="w-full h-2.5 sm:h-3 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-orange-500"
                 />
                 <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
                   <span>500m</span>
@@ -215,7 +222,7 @@ export default function Home() {
               {/* Submit Button */}
               <motion.button
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl shadow-lg text-sm sm:text-base"
                 whileHover={{
                   scale: 1.05,
                   boxShadow:
@@ -231,7 +238,7 @@ export default function Home() {
         </motion.div>
 
         {/* Info Cards */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {[
             {
               icon: "🗺️",
@@ -258,13 +265,13 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: card.delay, duration: 0.6 }}
               whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 text-center border border-gray-100 dark:border-gray-700 cursor-pointer"
+              className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 text-center border border-gray-100 dark:border-gray-700 cursor-pointer"
             >
-              <div className="text-3xl mb-2">{card.icon}</div>
-              <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+              <div className="text-2xl sm:text-3xl mb-2">{card.icon}</div>
+              <h3 className="font-semibold text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-1">
                 {card.title}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 {card.desc}
               </p>
             </motion.div>

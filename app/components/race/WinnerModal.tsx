@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { getEmojiName } from "~/config/emojis";
 import { getGoogleMapsUrl } from "./utils";
+import Avatar from "../Avatar";
 import type { Racer } from "./types";
 
 interface WinnerModalProps {
@@ -30,7 +31,7 @@ export default function WinnerModal({
           {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute text-3xl"
+              className="absolute text-xl sm:text-2xl md:text-3xl"
               initial={{
                 left: `${50}%`,
                 top: `${50}%`,
@@ -84,7 +85,7 @@ export default function WinnerModal({
           />
 
           {/* Trophy Section */}
-          <div className="relative overflow-hidden bg-linear-to-br from-yellow-400 via-orange-500 to-red-500 p-12 text-center">
+          <div className="relative overflow-hidden bg-linear-to-br from-yellow-400 via-orange-500 to-red-500 p-6 sm:p-8 md:p-12 text-center">
             <motion.div
               className="absolute inset-0"
               animate={{ rotate: 360 }}
@@ -109,7 +110,7 @@ export default function WinnerModal({
               {[...Array(15)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute text-2xl"
+                  className="absolute text-lg sm:text-xl md:text-2xl"
                   initial={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
@@ -144,7 +145,7 @@ export default function WinnerModal({
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="text-9xl mb-4 relative z-10 drop-shadow-2xl"
+              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-2 sm:mb-3 md:mb-4 relative z-10 drop-shadow-2xl"
             >
               🏆
             </motion.div>
@@ -153,7 +154,7 @@ export default function WinnerModal({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-6xl font-black text-white mb-2 relative z-10 drop-shadow-lg tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-2 relative z-10 drop-shadow-lg tracking-tight px-2"
               style={{
                 textShadow:
                   "0 4px 20px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.3)",
@@ -170,17 +171,17 @@ export default function WinnerModal({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-xl text-white/90 relative z-10 font-medium"
+              className="text-base sm:text-lg md:text-xl text-white/90 relative z-10 font-medium px-2"
             >
               🎊 Time to celebrate at 🎊
             </motion.p>
           </div>
 
           {/* Restaurant Info Section */}
-          <div className="p-10 relative">
+          <div className="p-4 sm:p-6 md:p-8 lg:p-10 relative">
             <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-yellow-400 to-transparent" />
 
-            <div className="text-center mb-8">
+            <div className="text-center mb-4 sm:mb-6 md:mb-8">
               {winner.emoji &&
                 (winner.emoji.startsWith("data:image/") ||
                   winner.emoji.startsWith("/")) && (
@@ -192,7 +193,7 @@ export default function WinnerModal({
                       type: "spring",
                       stiffness: 200,
                     }}
-                    className="flex justify-center mb-6"
+                    className="flex justify-center mb-3 sm:mb-4 md:mb-6"
                   >
                     <div className="relative">
                       <motion.div
@@ -205,10 +206,12 @@ export default function WinnerModal({
                           repeat: Infinity,
                         }}
                       />
-                      <img
+                      <Avatar
                         src={winner.emoji}
+                        emoji={winner.emoji}
                         alt={winner.name}
-                        className="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-yellow-400 relative z-10"
+                        size="2xl"
+                        className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 shadow-2xl border-2 sm:border-3 md:border-4 border-yellow-400 relative z-10"
                       />
                     </div>
                   </motion.div>
@@ -218,7 +221,7 @@ export default function WinnerModal({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
-                className="text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-yellow-400 via-orange-400 to-red-400 mb-4"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-yellow-400 via-orange-400 to-red-400 mb-3 sm:mb-4 px-2"
               >
                 {winner.name}
               </motion.h3>
@@ -229,26 +232,30 @@ export default function WinnerModal({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.8 }}
-                    className="space-y-4 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10"
+                    className="space-y-3 sm:space-y-4 bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-white/10"
                   >
                     {winner.restaurant.address && (
-                      <div className="flex items-start justify-center gap-3 text-gray-300">
-                        <span className="text-2xl mt-1">📍</span>
-                        <p className="text-lg max-w-md">
+                      <div className="flex items-start justify-center gap-2 sm:gap-3 text-gray-300">
+                        <span className="text-xl sm:text-2xl mt-1 flex-shrink-0">
+                          📍
+                        </span>
+                        <p className="text-sm sm:text-base md:text-lg max-w-md text-left sm:text-center">
                           {winner.restaurant.address}
                         </p>
                       </div>
                     )}
 
-                    <div className="flex items-center justify-center gap-6 flex-wrap">
+                    <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6 flex-wrap">
                       {winner.restaurant.rating && (
-                        <div className="flex items-center gap-2 bg-yellow-400/10 px-4 py-2 rounded-full border border-yellow-400/20">
-                          <span className="text-2xl">⭐</span>
-                          <span className="text-xl font-bold text-yellow-400">
+                        <div className="flex items-center gap-1.5 sm:gap-2 bg-yellow-400/10 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-full border border-yellow-400/20">
+                          <span className="text-lg sm:text-xl md:text-2xl">
+                            ⭐
+                          </span>
+                          <span className="text-base sm:text-lg md:text-xl font-bold text-yellow-400">
                             {winner.restaurant.rating.toFixed(1)}
                           </span>
                           {winner.restaurant.userRatingsTotal && (
-                            <span className="text-sm text-gray-400">
+                            <span className="text-xs sm:text-sm text-gray-400">
                               ({winner.restaurant.userRatingsTotal})
                             </span>
                           )}
@@ -256,8 +263,8 @@ export default function WinnerModal({
                       )}
 
                       {winner.restaurant.priceLevel && (
-                        <div className="flex items-center gap-2 bg-green-400/10 px-4 py-2 rounded-full border border-green-400/20">
-                          <span className="text-lg font-bold text-green-400">
+                        <div className="flex items-center gap-2 bg-green-400/10 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-full border border-green-400/20">
+                          <span className="text-base sm:text-lg font-bold text-green-400">
                             {"€".repeat(winner.restaurant.priceLevel)}
                             <span className="text-gray-600">
                               {"€".repeat(4 - winner.restaurant.priceLevel)}
@@ -269,7 +276,7 @@ export default function WinnerModal({
 
                     {winner.restaurant.types &&
                       winner.restaurant.types.length > 0 && (
-                        <div className="flex flex-wrap justify-center gap-2 pt-2">
+                        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 pt-2">
                           {winner.restaurant.types
                             .slice(0, 4)
                             .map((type, index) => (
@@ -281,7 +288,7 @@ export default function WinnerModal({
                                   delay: 0.9 + index * 0.1,
                                   type: "spring",
                                 }}
-                                className="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm font-medium border border-white/10"
+                                className="px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 bg-white/10 text-gray-300 rounded-full text-xs sm:text-sm font-medium border border-white/10"
                               >
                                 {type}
                               </motion.span>
@@ -297,7 +304,7 @@ export default function WinnerModal({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               {winner.restaurant &&
                 winner.restaurant.address !== "Manual entry" && (
@@ -310,7 +317,7 @@ export default function WinnerModal({
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 bg-linear-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-5 px-8 rounded-xl text-center flex items-center justify-center gap-3 transition-all relative overflow-hidden group shadow-lg"
+                    className="flex-1 bg-linear-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 rounded-lg sm:rounded-xl text-center flex items-center justify-center gap-2 sm:gap-3 transition-all relative overflow-hidden group shadow-lg"
                     whileHover={{
                       scale: 1.05,
                       boxShadow: "0 20px 60px rgba(249, 115, 22, 0.5)",
@@ -323,15 +330,17 @@ export default function WinnerModal({
                       whileHover={{ x: "100%" }}
                       transition={{ duration: 0.6 }}
                     />
-                    <span className="text-2xl relative z-10">🗺️</span>
-                    <span className="relative z-10 text-lg">
+                    <span className="text-xl sm:text-2xl relative z-10">
+                      🗺️
+                    </span>
+                    <span className="relative z-10 text-sm sm:text-base md:text-lg">
                       Open in Google Maps
                     </span>
                   </motion.a>
                 )}
               <motion.button
                 onClick={onClose}
-                className="flex-1 bg-linear-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-5 px-8 rounded-xl flex items-center justify-center gap-3 transition-all relative overflow-hidden group shadow-lg"
+                className="flex-1 bg-linear-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-3 sm:py-4 md:py-5 px-4 sm:px-6 md:px-8 rounded-lg sm:rounded-xl flex items-center justify-center gap-2 sm:gap-3 transition-all relative overflow-hidden group shadow-lg"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 20px 60px rgba(75, 85, 99, 0.5)",
@@ -344,22 +353,24 @@ export default function WinnerModal({
                   whileHover={{ x: "100%" }}
                   transition={{ duration: 0.6 }}
                 />
-                <span className="text-2xl relative z-10">🔄</span>
-                <span className="relative z-10 text-lg">Race Again</span>
+                <span className="text-xl sm:text-2xl relative z-10">🔄</span>
+                <span className="relative z-10 text-sm sm:text-base md:text-lg">
+                  Race Again
+                </span>
               </motion.button>
             </motion.div>
 
             {/* Close button */}
             <motion.button
               onClick={onClose}
-              className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white transition-colors border border-white/20"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white transition-colors border border-white/20"
               whileHover={{ scale: 1.2, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, rotate: -180 }}
               animate={{ opacity: 1, rotate: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <span className="text-2xl">✕</span>
+              <span className="text-xl sm:text-2xl">✕</span>
             </motion.button>
           </div>
         </motion.div>

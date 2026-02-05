@@ -10,12 +10,12 @@ export default function RaceHeader({ onBack }: RaceHeaderProps) {
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="container mx-auto px-4 py-6"
+      className="container mx-auto px-3 sm:px-4 py-4 sm:py-6"
     >
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
         <motion.button
           onClick={onBack}
-          className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors border border-gray-200 dark:border-gray-700 relative overflow-hidden group shadow-sm"
+          className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg transition-colors border border-gray-200 dark:border-gray-700 relative overflow-hidden group shadow-sm text-sm sm:text-base"
           whileHover={{ scale: 1.05, x: -5 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -39,11 +39,11 @@ export default function RaceHeader({ onBack }: RaceHeaderProps) {
             damping: 20,
             delay: 0.2,
           }}
-          className="text-3xl md:text-4xl font-bold text-center flex-1 text-orange-600 dark:text-orange-500"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center flex-1 text-orange-600 dark:text-orange-500"
         >
           🪄 Spell-icious 🏁
         </motion.h1>
-        <div className="w-20"></div>
+        <div className="w-12 sm:w-16 md:w-20"></div>
       </div>
     </motion.div>
   );

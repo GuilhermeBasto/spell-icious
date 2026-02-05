@@ -158,7 +158,7 @@ export default function Race() {
     <div className="min-h-screen text-gray-900 dark:text-white overflow-hidden">
       <RaceHeader onBack={() => navigate(-1)} />
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4">
         <div className="max-w-6xl mx-auto">
           <CountdownDisplay
             countdown={countdown}
@@ -179,7 +179,7 @@ export default function Race() {
             onClose={resetRace}
           />
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {racers.map((racer, index) => (
               <RaceLane
                 key={index}
